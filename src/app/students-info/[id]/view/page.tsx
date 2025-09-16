@@ -5,6 +5,8 @@ type PageProps = {
     params: Promise<{ id: string }>
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({ params }: PageProps) {
 
     const student = await prisma.student.findFirst({
