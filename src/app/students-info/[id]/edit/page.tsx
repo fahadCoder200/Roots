@@ -10,7 +10,7 @@ export default async function editStudent({ params }: Props) {
 
     const student = await prisma.student.findFirst({
         where: { id: (await params).id },
-        include: { enrollments: {include: {subject: true}} }
+        include: { enrollments: {include: {subject: true, grades: true}} }
     });
 
     const subjects = await prisma.subject.findMany({
