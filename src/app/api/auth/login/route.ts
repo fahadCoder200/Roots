@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import {prisma} from "@/lib/prisma";
 
 export async function POST(req: Request) {
     try {
