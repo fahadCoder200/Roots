@@ -4,6 +4,8 @@ import TeacherTable from "@/components/TeacherTable";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function StudentsInfo() {
 
     const teachers = await prisma.teacher.findMany({ include: { subjects: true } });

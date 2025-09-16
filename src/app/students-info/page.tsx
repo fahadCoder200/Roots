@@ -3,6 +3,8 @@ import StudentTable from "@/components/StudentTable";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function StudentsInfo() {
 
     const students = await prisma.student.findMany({include: {enrollments: true}});
