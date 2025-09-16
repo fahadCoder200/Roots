@@ -20,7 +20,7 @@ export default function SignupForm() {
         const data = Object.fromEntries(signUpData.entries());
 
         try {
-            let request = await axios.post(`${baseURL}/auth/signup`, { data });
+            const request = await axios.post(`${baseURL}/auth/signup`, { data });
 
             if (request && request.data.user.status !== "pending") {
                 toast.success("Signed up successfully!");

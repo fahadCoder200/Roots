@@ -22,7 +22,7 @@ export default function TeacherForm({ subjectList }: SubjectListProps,) {
         console.log(data);
 
         try {
-            let request = await axios.post(`${baseURL}/create/teacher`, { data });
+            const request = await axios.post(`${baseURL}/create/teacher`, { data });
 
             if (request) {
                 toast.success("Teacher Created Successfully!");

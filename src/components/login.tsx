@@ -19,7 +19,7 @@ export default function LoginForm() {
     console.log(data);
 
     try {
-      let request = await axios.post(`${baseURL}/auth/login`, { data });
+      const request = await axios.post(`${baseURL}/auth/login`, { data });
 
       if (request) {
         toast.success("Signed up successfully!");

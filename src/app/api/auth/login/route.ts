@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         }
 
         if (await bcrypt.compare(password, user.password)) {
-            let sessionCookie = jwt.sign({ payload: user, jti: Math.floor(Date.now() / 1000) }, process.env.JWT_ID!, { expiresIn: "30d" });
+            const sessionCookie = jwt.sign({ payload: user, jti: Math.floor(Date.now() / 1000) }, process.env.JWT_ID!, { expiresIn: "30d" });
 
             (await cookies()).set("sessionCookie", sessionCookie, {
                 httpOnly: true,

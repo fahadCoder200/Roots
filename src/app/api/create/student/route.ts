@@ -1,13 +1,26 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+// Define the expected shape of the request body
+interface SubjectInput {
+  subject: string;
+  teacherId: string; // or number if it's numeric
+}
+
+interface StudentRequestBody {
+  name: string;
+  Class: string;
+  subjectFromFrontend: SubjectInput[];
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body: StudentRequestBody = await req.json();
     const { name, Class, subjectFromFrontend } = body;
     console.log(name, Class, subjectFromFrontend);
 
-    const subjectNames = subjectFromFrontend.map((s: any) => s.subject);
+    // Now TypeScript knows the type of `s`
+    const subjectNames = subjectFromFrontend.map((s) => s.subject);
 
     const subjects = await prisma.subject.findMany({
       where: {
@@ -23,7 +36,8 @@ export async function POST(req: Request) {
       },
     });
 
-    const enrollmentsData = subjectFromFrontend.map((sf: any) => {
+    // sf is strongly typed
+    const enrollmentsData = subjectFromFrontend.map((sf) => {
       const subject = subjects.find((s) => s.name === sf.subject);
       if (!subject) throw new Error(`Subject not found: ${sf.subject}`);
       console.log(sf);
@@ -32,7 +46,7 @@ export async function POST(req: Request) {
         studentId: student.id,
         subjectId: subject.id,
         teacherId: sf.teacherId,
-        subjectName: subject.name
+        subjectName: subject.name,
       };
     });
 

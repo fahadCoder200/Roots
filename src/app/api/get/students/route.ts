@@ -12,7 +12,7 @@ export async function POST(req: Request) {
             include: {enrollments: true}
         });
 
-        let studentIds: string[] = [];
+        const studentIds: string[] = [];
         teacher?.enrollments.map((e) => studentIds.push(e.studentId));
 
         const students = await prisma.student.findMany({
