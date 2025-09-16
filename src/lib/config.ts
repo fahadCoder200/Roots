@@ -1,1 +1,1 @@
-export const baseURL = 'http://localhost:3000/api'
+export const baseURL = 'https://roots-mbvw.vercel.app/api'
