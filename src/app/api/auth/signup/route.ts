@@ -64,7 +64,7 @@ export async function POST(req: Request) {
                 },
             });
 
-            let sessionCookie = jwt.sign({ payload: newUser, jti: Math.floor(Date.now() / 1000) }, process.env.JWT_ID!, { expiresIn: "30d" });
+            const sessionCookie = jwt.sign({ payload: newUser, jti: Math.floor(Date.now() / 1000) }, process.env.JWT_ID!, { expiresIn: "30d" });
 
             (await cookies()).set("sessionCookie", sessionCookie, {
                 httpOnly: true,
