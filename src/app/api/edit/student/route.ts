@@ -83,7 +83,7 @@ export async function PATCH(req: Request) {
           },
         });
 
-        if (subObj.secondSessionGrade && subObj.secondSessionGrade !== "none") {
+        if (subObj.secondSessionGrade) {
           await prisma.grade.upsert({
             where: {
               enrollmentId_session: {
@@ -112,7 +112,6 @@ export async function PATCH(req: Request) {
   }
 }
 
-// DELETE student with enrollments
 export async function POST(req: Request) {
   try {
     const body = await req.json();
