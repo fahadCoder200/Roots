@@ -6,7 +6,12 @@ export default async function Login() {
 
     const user = await getUserFromCookies();
 
-    console.log(user);
-    if(user) redirect(`/dashboard-${(user.payload.role).toLowerCase()}`);
+    if (user && user.payload.role === "Admin") {
+        redirect(`/dashboard-admin`);
+    }
+
+    else if(user && user.payload.role === "Teacher"){
+        redirect("/dashboard-teacher")
+    }
     return <LoginForm />
 }
