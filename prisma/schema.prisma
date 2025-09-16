@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  role      String
+  status    String
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Student {
+  id          String       @id @default(cuid())
+  name        String
+  class       String
+  enrollments Enrollment[]
+}
+
+model Teacher {
+  id          String       @id @default(cuid())
+  name        String
+  enrollments Enrollment[]
+  subjects    Subject[]    @relation("SubjectToTeacher")
+}
+
+model Subject {
+  id          Int          @id @default(autoincrement())
+  name        String
+  enrollments Enrollment[]
+  teachers    Teacher[]    @relation("SubjectToTeacher")
+}
+
+model Grade {
+  id           String      @id @default(cuid())
+  grade        String?
+  session      String
+  enrollmentId String      // 🔑 foreign key
+  enrollment   Enrollment  @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+
+  @@unique([enrollmentId, session], name: "enrollmentId_session")
+}
+
+model Enrollment {
+  id          String   @id @default(cuid())
+  studentId   String
+  subjectId   Int
+  teacherId   String
+  subjectName String?
+
+  student     Student  @relation(fields: [studentId], references: [id])
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  teacher     Teacher  @relation(fields: [teacherId], references: [id])
+
+  grades      Grade[]  // ✅ one enrollment → many grades
+}
