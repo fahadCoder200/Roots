@@ -34,7 +34,7 @@ export default async function Page({ params }: PageProps) {
   const getGrade = (grades: any[], session: string) => {
     const g = grades.find((gr) => gr.session === session);
     if (!g) {
-      return { marks: "Not Assigned", grade: " ", percentage: " " };
+      return { marks: " ", grade: " ", percentage: " " };
     }
     return {
       marks: g.marks ?? " ",

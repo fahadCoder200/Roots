@@ -10,6 +10,12 @@ interface GradeInput {
   subjectName: string;
   firstSessionGrade: string;
   secondSessionGrade?: string;
+  thirdSessionGrade?: string,
+  fourthSessionGrade?: string,
+  firstSessionMarks?: string,
+  secondSessionMarks?: string,
+  thirdSessionMarks?: string,
+  fourthSessionMarks?: string
 }
 
 interface PatchBody {
@@ -74,10 +80,11 @@ export async function PATCH(req: Request) {
               session: "firstSession",
             },
           },
-          update: { grade: subObj.firstSessionGrade },
+          update: { grade: subObj.firstSessionGrade, marks: subObj.firstSessionMarks },
           create: {
             session: "firstSession",
             grade: subObj.firstSessionGrade,
+            marks: subObj.firstSessionMarks,
             enrollmentId: enrollment.id,
           },
         });
@@ -90,10 +97,47 @@ export async function PATCH(req: Request) {
                 session: "secondSession",
               },
             },
-            update: { grade: subObj.secondSessionGrade },
+            update: { grade: subObj.secondSessionGrade, marks: subObj.secondSessionMarks },
             create: {
               session: "secondSession",
               grade: subObj.secondSessionGrade,
+              marks: subObj.secondSessionMarks,
+              enrollmentId: enrollment.id,
+            },
+          });
+        }
+
+        if (subObj.thirdSessionGrade) {
+          await prisma.grade.upsert({
+            where: {
+              enrollmentId_session: {
+                enrollmentId: enrollment.id,
+                session: "thirdSession",
+              },
+            },
+            update: { grade: subObj.thirdSessionGrade, marks: subObj.thirdSessionMarks },
+            create: {
+              session: "thirdSession",
+              grade: subObj.thirdSessionGrade,
+              marks: subObj.thirdSessionMarks,
+              enrollmentId: enrollment.id,
+            },
+          });
+        }
+
+        if (subObj.fourthSessionGrade) {
+          await prisma.grade.upsert({
+            where: {
+              enrollmentId_session: {
+                enrollmentId: enrollment.id,
+                session: "fourthSession",
+              },
+            },
+            update: { grade: subObj.fourthSessionGrade, marks: subObj.fourthSessionMarks },
+            create: {
+              session: "fourthSession",
+              grade: subObj.fourthSessionGrade,
+              marks: subObj.fourthSessionMarks,
               enrollmentId: enrollment.id,
             },
           });
