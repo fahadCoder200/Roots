@@ -1,5 +1,6 @@
 "use client"
 import { Prisma } from "@prisma/client";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 type StudentWithSubjects = Prisma.StudentGetPayload<{
@@ -37,7 +38,7 @@ export default function StudentTable({ students }: StudentProps) {
                                             ? s.enrollments.map((s) => s.subjectName).join(", ")
                                             : "No subjects"}
                                     </span>
-                                    <img onClick={() => redirect(`/students-info/${s.id}/edit`)} src="edit.png" alt="edit" className="w-7 hover:opacity-45" />
+                                    <Image onClick={() => redirect(`/students-info/${s.id}/edit`)} src="edit.png" alt="edit" className="w-7 hover:opacity-45" />
                                 </div>
                             </td>
                             <td onClick={() => redirect(`/students-info/${s.id}/view`)} className="border px-4 py-2">View Details</td>
