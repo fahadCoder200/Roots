@@ -24,7 +24,7 @@ export default function LoginForm() {
       if (request) {
         toast.success("Signed up successfully!");
         setTimeout(() => {
-          redirect("/dashboard");
+          redirect(`/dashboard-${(data.accountType).toString().toLowerCase()}`);
         }, 1000);
       }
     } catch (err) {

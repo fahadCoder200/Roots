@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-// --- Types ---
 interface SubjectInput {
   subject: string;
   teacherId: string;

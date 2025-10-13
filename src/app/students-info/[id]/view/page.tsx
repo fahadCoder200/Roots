@@ -1,60 +1,103 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import React from "react";
 
 type PageProps = {
-    params: Promise<{ id: string }>
+  params: Promise<{ id: string }>
 }
 
 export const dynamic = "force-dynamic";
 
 export default async function Page({ params }: PageProps) {
-
-    const student = await prisma.student.findFirst({
-        where: { id: (await params).id },
+  const student = await prisma.student.findFirst({
+    where: { id: (await params).id },
+    include: {
+      enrollments: {
         include: {
-            enrollments: {
-                include: {
-                    subject: true,
-                    teacher: true,
-                    grades: true,
-                },
-            },
+          subject: true,
+          teacher: true,
+          grades: true, // { session: "firstSession" | "secondSession" | "thirdSession" | "fourthSession", marks, grade, percentage }
         },
-    });
+      },
+    },
+  });
 
+  // Sessions we want to display
+  const sessions = [
+    { key: "firstSession", label: "First Session" },
+    { key: "secondSession", label: "Second Session" },
+    { key: "thirdSession", label: "Third Session" },
+    { key: "fourthSession", label: "Fourth Session" },
+  ];
 
-    return (
-        <div className="p-4 flex flex-col items-center gap-6 justify-center w-full">
-            <h1 className="text-xl font-semibold mb-4">
-                {student?.name} ({student?.class})
-            </h1>
+  // Helper: fetch grade info for a given session
+  const getGrade = (grades: any[], session: string) => {
+    const g = grades.find((gr) => gr.session === session);
+    if (!g) {
+      return { marks: "Not Assigned", grade: "Not Assigned", percentage: "Not Assigned" };
+    }
+    return {
+      marks: g.marks ?? "Not Assigned",
+      grade: g.grade === "none" ? "Not Assigned" : g.grade,
+      percentage: g.percentage ? `${g.percentage}%` : "Not Assigned",
+    };
+  };
 
-            <table className="w-full border-collapse border border-gray-300 rounded-lg shadow-sm">
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="border px-4 py-2 text-left">Subject</th>
-                        <th className="border px-4 py-2 text-left">Teacher</th>
-                        <th className="border px-4 py-2 text-left">Grade(1st Session)</th>
-                        <th className="border px-4 py-2 text-left">Grade(2nd Session)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {student?.enrollments.map((e) => (
-                        <tr key={e.id} className="hover:bg-gray-50 transition"
-                        >
-                            <td className="border px-4 py-2">{e.subject?.name ?? "-"}</td>
-                            <td className="border px-4 py-2">{e.teacher?.name ?? "-"}</td>
-                            {e.grades.length !== 0 ? e.grades.map((g) => (
-                                <td key={g.id} className="border px-4 py-2">{g.grade === 'none' ? "Not Assigned" : g.grade}</td>
-                            )) : <><td className="border px-4 py-2">{"Not Assigned"}</td><td className="border px-4 py-2">{"Not Assigned"}</td></>
-                            }
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+  return (
+    <div className="p-6 flex flex-col items-center gap-6 justify-center w-full">
+      <h1 className="text-2xl font-bold mb-6">
+        Report Card – {student?.name} ({student?.class})
+      </h1>
 
-            <Link href="/students-info" className="border-2 border-red-600 cursor-pointer px-4 py-2 rounded">Go Back</Link>
-        </div>
-    );
+      <table className="w-full border-collapse border border-gray-300 rounded-lg shadow-md text-center">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="border px-4 py-2">Subject</th>
+            <th className="border px-4 py-2">Teacher</th>
+            {sessions.map((s) => (
+              <th key={s.key} className="border px-4 py-2" colSpan={3}>
+                {s.label}
+              </th>
+            ))}
+          </tr>
+          <tr className="bg-gray-50">
+            <th className="border px-4 py-2"></th>
+            <th className="border px-4 py-2"></th>
+            {sessions.map((s) => (
+              <React.Fragment key={s.key}>
+                <th className="border px-4 py-2">Marks</th>
+                <th className="border px-4 py-2">Grade</th>
+                <th className="border px-4 py-2">%</th>
+              </React.Fragment>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {student?.enrollments.map((e) => (
+            <tr key={e.id} className="hover:bg-gray-50 transition">
+              <td className="border px-4 py-2">{e.subject?.name ?? "-"}</td>
+              <td className="border px-4 py-2">{e.teacher?.name ?? "-"}</td>
+              {sessions.map((s) => {
+                const g = getGrade(e.grades, s.key);
+                return (
+                  <React.Fragment key={s.key}>
+                    <td className="border px-4 py-2">{g.marks}</td>
+                    <td className="border px-4 py-2">{g.grade}</td>
+                    <td className="border px-4 py-2">{g.percentage}</td>
+                  </React.Fragment>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
+      <Link
+        href="/students-info"
+        className="border-2 border-red-600 cursor-pointer px-4 py-2 rounded hover:bg-red-600 hover:text-white transition"
+      >
+        Go Back
+      </Link>
+    </div>
+  );
 }

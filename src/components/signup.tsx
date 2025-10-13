@@ -25,7 +25,7 @@ export default function SignupForm() {
             if (request && request.data.user.status !== "pending") {
                 toast.success("Signed up successfully!");
                 setTimeout(() => {
-                    router.push("/dashboard");
+                    router.push(`/dashboard-${(data.accountType).toString().toLowerCase()}`);
                 }, 1000);
             }
             else {

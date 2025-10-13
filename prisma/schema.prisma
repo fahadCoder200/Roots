@@ -10,7 +10,7 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  name      String?
+  name      String?  @unique
   role      String
   status    String
   password  String
@@ -41,6 +41,8 @@ model Subject {
 model Grade {
   id           String      @id @default(cuid())
   grade        String?
+  marks        String?
+  percentage   Int?
   session      String
   enrollmentId String      // 🔑 foreign key
   enrollment   Enrollment  @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)

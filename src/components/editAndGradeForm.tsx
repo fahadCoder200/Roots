@@ -123,6 +123,7 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
           <p className="font-semibold">{e.subjectName} Grades</p>
           <div>
             <label htmlFor={`${e.subjectName}-first`}>1st Session</label>
+            <p>Grade</p>
             <select
               className="border p-2 rounded w-full"
               name={`${e.subjectName}-first`}
@@ -136,7 +137,13 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
               <option value="E">E</option>
               <option value="F">F</option>
             </select>
+
+            <p>Marks</p>
+            <input placeholder="enter session's marks" className="border p-2 rounded w-full" type="number" name="marks" />
           </div>
+
+         <div>
+         </div>
 
           <div>
             <label htmlFor={`${e.subjectName}-second`}>2nd Session</label>
