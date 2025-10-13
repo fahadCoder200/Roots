@@ -144,7 +144,7 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
             </select>
 
             <p>Marks</p>
-            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-first`} />
+            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-first`} />
           </div>
 
           <div>
@@ -167,7 +167,7 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
             </select>
 
             <p>Marks</p>
-            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-second`} />
+            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-second`} />
           </div>
 
           <div>
@@ -187,7 +187,7 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
             </select>
 
             <p>Marks</p>
-            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-third`} />
+            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-third`} />
           </div>
 
           <div>
@@ -207,7 +207,7 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
             </select>
 
             <p>Marks</p>
-            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-fourth`} />
+            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-fourth`} />
           </div>
         </div>
       ))}

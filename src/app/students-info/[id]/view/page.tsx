@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
     return {
       marks: g.marks ?? " ",
       grade: g.grade === "none" ? " " : g.grade,
-      percentage: g.percentage ? `${g.percentage}%` : " ",
+      percentage: g.marks ? `${(g.marks / 75) * 100}%` : " ",
     };
   };
 
