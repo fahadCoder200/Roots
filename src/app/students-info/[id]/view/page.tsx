@@ -16,13 +16,13 @@ export default async function Page({ params }: PageProps) {
         include: {
           subject: true,
           teacher: true,
-          grades: true, // { session: "firstSession" | "secondSession" | "thirdSession" | "fourthSession", marks, grade, percentage }
+          grades: true, 
         },
       },
     },
   });
 
-  // Sessions we want to display
+
   const sessions = [
     { key: "firstSession", label: "First Session" },
     { key: "secondSession", label: "Second Session" },
@@ -30,16 +30,16 @@ export default async function Page({ params }: PageProps) {
     { key: "fourthSession", label: "Fourth Session" },
   ];
 
-  // Helper: fetch grade info for a given session
+
   const getGrade = (grades: any[], session: string) => {
     const g = grades.find((gr) => gr.session === session);
     if (!g) {
-      return { marks: "Not Assigned", grade: "Not Assigned", percentage: "Not Assigned" };
+      return { marks: "Not Assigned", grade: " ", percentage: " " };
     }
     return {
-      marks: g.marks ?? "Not Assigned",
-      grade: g.grade === "none" ? "Not Assigned" : g.grade,
-      percentage: g.percentage ? `${g.percentage}%` : "Not Assigned",
+      marks: g.marks ?? " ",
+      grade: g.grade === "none" ? " " : g.grade,
+      percentage: g.percentage ? `${g.percentage}%` : " ",
     };
   };
 

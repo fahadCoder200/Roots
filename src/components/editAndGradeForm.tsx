@@ -50,7 +50,9 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
       subjectName: e.subjectName,
       firstSessionGrade: formData.get(`${e.subjectName}-first`) as string,
       secondSessionGrade: formData.get(`${e.subjectName}-second`) as string,
-      session: "firstSession",
+      thirdSessionGrade: formData.get(`${e.subjectName}-third`) as string,
+      fourthSessionGrade: formData.get(`${e.subjectName}-fourth`) as string
+
     }));
     console.log(gradePerSubject);
 
@@ -139,11 +141,11 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
             </select>
 
             <p>Marks</p>
-            <input placeholder="enter session's marks" className="border p-2 rounded w-full" type="number" name="marks" />
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name="marks-first" />
           </div>
 
-         <div>
-         </div>
+          <div>
+          </div>
 
           <div>
             <label htmlFor={`${e.subjectName}-second`}>2nd Session</label>
@@ -160,6 +162,49 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
               <option value="E">E</option>
               <option value="F">F</option>
             </select>
+
+            <p>Marks</p>
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name="marks-second" />
+          </div>
+
+          <div>
+            <label htmlFor={`${e.subjectName}-third`}>3rd Session</label>
+            <select
+              className="border p-2 rounded w-full"
+              name={`${e.subjectName}-third`}
+              defaultValue={e.grades?.find((g) => g.session === "thirdSession")?.grade || "none"}
+            >
+              <option value="none">None</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+            </select>
+
+            <p>Marks</p>
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name="marks-third" />
+          </div>
+
+          <div>
+            <label htmlFor={`${e.subjectName}-fourth`}>4th Session</label>
+            <select
+              className="border p-2 rounded w-full"
+              name={`${e.subjectName}-fourth`}
+              defaultValue={e.grades?.find((g) => g.session === "fourthSession")?.grade || "none"}
+            >
+              <option value="none">None</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+            </select>
+
+            <p>Marks</p>
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name="marks-fourth" />
           </div>
         </div>
       ))}
