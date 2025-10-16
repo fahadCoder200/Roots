@@ -40,9 +40,8 @@ model Subject {
 
 model Grade {
   id           String      @id @default(cuid())
-  grade        String?
+  maxMarks     String?
   marks        String?
-  percentage   Int?
   session      String
   enrollmentId String      // 🔑 foreign key
   enrollment   Enrollment  @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)

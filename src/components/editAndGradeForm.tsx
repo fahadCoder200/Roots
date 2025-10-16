@@ -17,13 +17,11 @@ type StudentsWithSubjects = Prisma.StudentGetPayload<{
     enrollments: {
       include: {
         subject: true;
-        grades: true; // ✅ corrected
+        grades: true;
       };
     };
   };
 }>;
-
-
 
 type subjectProps = {
   allSubjects: SubjectWithTeachers[];
@@ -48,13 +46,13 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
 
     const gradePerSubject = student.enrollments.map((e) => ({
       subjectName: e.subjectName,
-      firstSessionGrade: formData.get(`${e.subjectName}-first`) as string,
+      firstSessionMaxMarks: formData.get(`${e.subjectName}-first`) as string,
       firstSessionMarks: formData.get(`${e.subjectName}-marks-first`) as string,
-      secondSessionGrade: formData.get(`${e.subjectName}-second`) as string,
+      secondSessionMaxMarks: formData.get(`${e.subjectName}-second`) as string,
       secondSessionMarks: formData.get(`${e.subjectName}-marks-second`) as string,
-      thirdSessionGrade: formData.get(`${e.subjectName}-third`) as string,
+      thirdSessionMaxMarks: formData.get(`${e.subjectName}-third`) as string,
       thirdSessionMarks: formData.get(`${e.subjectName}-marks-third`) as string,
-      fourthSessionGrade: formData.get(`${e.subjectName}-fourth`) as string,
+      fourthSessionMaxMarks: formData.get(`${e.subjectName}-fourth`) as string,
       fourthSessionMarks: formData.get(`${e.subjectName}-marks-fourth`) as string
     }));
     console.log(gradePerSubject);
@@ -128,23 +126,13 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
           <p className="font-semibold">{e.subjectName} Grades</p>
           <div>
             <label htmlFor={`${e.subjectName}-first`}>1st Session</label>
-            <p>Grade</p>
-            <select
-              className="border p-2 rounded w-full"
-              name={`${e.subjectName}-first`}
-              defaultValue={e.grades?.find((g) => g.session === "firstSession")?.grade || "none"}
-            >
-              <option value="none">None</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-            </select>
+
+            <p>Max Marks</p>
+            <input placeholder="Enter maximum marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-first`} />
 
             <p>Marks</p>
-            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-first`} />
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-first`} />
+
           </div>
 
           <div>
@@ -152,62 +140,29 @@ export default function EditStudentsForm({ allSubjects, student }: subjectProps)
 
           <div>
             <label htmlFor={`${e.subjectName}-second`}>2nd Session</label>
-            <select
-              className="border p-2 rounded w-full"
-              name={`${e.subjectName}-second`}
-              defaultValue={e.grades?.find((g) => g.session === "secondSession")?.grade || "none"}
-            >
-              <option value="none">None</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-            </select>
+            <p>Max Marks</p>
+            <input placeholder="Enter maximum marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-second`} />
 
             <p>Marks</p>
-            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-second`} />
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-second`} />
           </div>
 
           <div>
             <label htmlFor={`${e.subjectName}-third`}>3rd Session</label>
-            <select
-              className="border p-2 rounded w-full"
-              name={`${e.subjectName}-third`}
-              defaultValue={e.grades?.find((g) => g.session === "thirdSession")?.grade || "none"}
-            >
-              <option value="none">None</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-            </select>
+            <p>Max Marks</p>
+            <input placeholder="Enter maximum marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-third`} />
 
             <p>Marks</p>
-            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-third`} />
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-third`} />
           </div>
 
           <div>
             <label htmlFor={`${e.subjectName}-fourth`}>4th Session</label>
-            <select
-              className="border p-2 rounded w-full"
-              name={`${e.subjectName}-fourth`}
-              defaultValue={e.grades?.find((g) => g.session === "fourthSession")?.grade || "none"}
-            >
-              <option value="none">None</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-              <option value="D">D</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-            </select>
+            <p>Max Marks</p>
+            <input placeholder="Enter maximum marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-fourth`} />
 
             <p>Marks</p>
-            <input max={75} placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-fourth`} />
+            <input placeholder="Enter session's marks" className="border p-2 rounded w-full" type="number" name={`${e.subjectName}-marks-fourth`} />
           </div>
         </div>
       ))}

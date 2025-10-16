@@ -8,10 +8,10 @@ interface SubjectInput {
 
 interface GradeInput {
   subjectName: string;
-  firstSessionGrade: string;
-  secondSessionGrade?: string;
-  thirdSessionGrade?: string,
-  fourthSessionGrade?: string,
+  firstSessionMaxMarks?: string;
+  secondSessionMaxMarks?: string;
+  thirdSessionMaxMarks?: string,
+  fourthSessionMaxMarks?: string,
   firstSessionMarks?: string,
   secondSessionMarks?: string,
   thirdSessionMarks?: string,
@@ -80,16 +80,16 @@ export async function PATCH(req: Request) {
               session: "firstSession",
             },
           },
-          update: { grade: subObj.firstSessionGrade, marks: subObj.firstSessionMarks },
+          update: { maxMarks: subObj.firstSessionMaxMarks, marks: subObj.firstSessionMarks },
           create: {
             session: "firstSession",
-            grade: subObj.firstSessionGrade,
+            maxMarks: subObj.firstSessionMaxMarks,
             marks: subObj.firstSessionMarks,
             enrollmentId: enrollment.id,
           },
         });
 
-        if (subObj.secondSessionGrade) {
+        if (subObj.secondSessionMaxMarks) {
           await prisma.grade.upsert({
             where: {
               enrollmentId_session: {
@@ -97,17 +97,17 @@ export async function PATCH(req: Request) {
                 session: "secondSession",
               },
             },
-            update: { grade: subObj.secondSessionGrade, marks: subObj.secondSessionMarks },
+            update: { maxMarks: subObj.secondSessionMaxMarks, marks: subObj.secondSessionMarks },
             create: {
               session: "secondSession",
-              grade: subObj.secondSessionGrade,
+              maxMarks: subObj.secondSessionMaxMarks,
               marks: subObj.secondSessionMarks,
               enrollmentId: enrollment.id,
             },
           });
         }
 
-        if (subObj.thirdSessionGrade) {
+        if (subObj.thirdSessionMaxMarks) {
           await prisma.grade.upsert({
             where: {
               enrollmentId_session: {
@@ -115,17 +115,17 @@ export async function PATCH(req: Request) {
                 session: "thirdSession",
               },
             },
-            update: { grade: subObj.thirdSessionGrade, marks: subObj.thirdSessionMarks },
+            update: { maxMarks: subObj.thirdSessionMaxMarks, marks: subObj.thirdSessionMarks },
             create: {
               session: "thirdSession",
-              grade: subObj.thirdSessionGrade,
+              maxMarks: subObj.thirdSessionMaxMarks,
               marks: subObj.thirdSessionMarks,
               enrollmentId: enrollment.id,
             },
           });
         }
 
-        if (subObj.fourthSessionGrade) {
+        if (subObj.fourthSessionMaxMarks) {
           await prisma.grade.upsert({
             where: {
               enrollmentId_session: {
@@ -133,10 +133,10 @@ export async function PATCH(req: Request) {
                 session: "fourthSession",
               },
             },
-            update: { grade: subObj.fourthSessionGrade, marks: subObj.fourthSessionMarks },
+            update: { maxMarks: subObj.fourthSessionMaxMarks, marks: subObj.fourthSessionMarks },
             create: {
               session: "fourthSession",
-              grade: subObj.fourthSessionGrade,
+              maxMarks: subObj.fourthSessionMaxMarks,
               marks: subObj.fourthSessionMarks,
               enrollmentId: enrollment.id,
             },
